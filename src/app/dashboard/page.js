@@ -54,6 +54,7 @@ export default function Dashboard() {
           </motion.div>
         </motion.div>
 
+
         <div className="bg-white rounded-2xl shadow-md p-6">
           <h2 className="text-lg font-semibold text-[#647FBC] mb-4">
             Products (count: {postCount})

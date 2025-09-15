@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Demo",
-  description: "Demo project with Next.js, React Query, Tailwind CSS, Framer Motion, and React Hot Toast",
+  description: "Demo project with Next.js",
 };
 
 export default function RootLayout({ children }) {
