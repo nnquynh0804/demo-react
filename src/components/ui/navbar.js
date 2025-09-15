@@ -3,12 +3,14 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "./Button";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
+    toast.success("Đăng xuất thành công!");
   };
 
   return (
