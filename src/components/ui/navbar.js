@@ -21,7 +21,6 @@ export default function Navbar() {
       className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#647FBC] to-[#91ADDC] text-white shadow-lg z-50"
     >
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-        {/* Logo */}
         <Link
           href="/"
           className="text-lg font-bold tracking-wide flex items-center gap-2 hover:scale-105 transition-transform"
@@ -29,7 +28,6 @@ export default function Navbar() {
           Demo App
         </Link>
 
-        {/* Menu */}
         <div className="flex items-center space-x-4">
           {user ? (
             <>

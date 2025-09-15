@@ -7,7 +7,6 @@ export default function Cart({
   increaseQty,
   decreaseQty,
 }) {
-  // totalPrice sẽ được tính lại khi cart thay đổi
   const totalPrice = useMemo(() => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [cart]);

@@ -30,12 +30,11 @@ export default function ProductsList({ data, isLoading, error, addToCart }) {
           transition={{ duration: 0.4 }}
           className="p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition"
         >
-          {/* Title */}
+
           <h3 className="font-bold text-[#647FBC] text-lg mb-1">
             {product.title}
           </h3>
 
-          {/* Description + Category */}
           <p className="text-sm text-gray-600 mb-3 line-clamp-2">
             {product.description}
           </p>
@@ -43,7 +42,7 @@ export default function ProductsList({ data, isLoading, error, addToCart }) {
             Category: <span className="italic">{product.category}</span>
           </p>
 
-          {/* Price & Rating */}
+
           <div className="flex items-center justify-between mb-3">
             <span className="text-lg font-semibold text-[#2F4B8F]">
               ${product.price}
@@ -53,7 +52,7 @@ export default function ProductsList({ data, isLoading, error, addToCart }) {
             </span>
           </div>
 
-          {/* Add to Cart Button */}
+
           <Button
             onClick={() => addToCart(product)}
             className="w-full bg-[#647FBC] hover:bg-[#4b5f99] text-white rounded-lg"
