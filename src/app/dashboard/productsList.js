@@ -30,10 +30,12 @@ export default function ProductsList({ data, isLoading, error, addToCart }) {
           transition={{ duration: 0.4 }}
           className="p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition"
         >
-
-          <h3 className="font-bold text-[#647FBC] text-lg mb-1">
+            <div className="flex justify mb-3">
+            <img src={product.thumbnail} alt={product.title} className="w-20 h-18 object-cover rounded-md mb-2" />
+          <h3 className="font-bold text-[#647FBC] text-lg mb-1 mt-4 ml-4">
             {product.title}
           </h3>
+          </div>
 
           <p className="text-sm text-gray-600 mb-3 line-clamp-2">
             {product.description}
