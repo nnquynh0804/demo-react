@@ -61,44 +61,60 @@ export default function Dashboard() {
           </h2>
 
           {isLoading ? (
-            <p className="text-gray-500">Loading...</p>
-          ) : (
             <motion.ul
-              initial="hidden"
-              animate="show"
-              variants={{
+                className="space-y-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+            >
+                {[...Array(5)].map((_, i) => (
+                <div
+                    key={i}
+                    className="p-4 bg-gray-100 rounded-xl border border-gray-200 animate-pulse"
+                >
+                    <div className="h-4 w-1/3 bg-gray-300 rounded mb-2"></div>
+                    <div className="h-3 w-full bg-gray-300 rounded mb-1"></div>
+                    <div className="h-3 w-2/3 bg-gray-300 rounded"></div>
+                </div>
+                ))}
+            </motion.ul>
+            ) : (
+            <motion.ul
+                initial="hidden"
+                animate="show"
+                variants={{
                 hidden: { opacity: 0 },
                 show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.15 },
+                    opacity: 1,
+                    transition: { staggerChildren: 0.15 },
                 },
-              }}
-              className="space-y-3"
+                }}
+                className="space-y-3"
             >
-              {data.map((product) => (
+                {data.map((product) => (
                 <motion.li
-                  key={product.id}
-                  variants={{
+                    key={product.id}
+                    variants={{
                     hidden: { opacity: 0, y: 20 },
                     show: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: 0.4 }}
-                  className="p-4 bg-[#647FBC]/10 rounded-xl border border-[#647FBC]/20"
+                    }}
+                    transition={{ duration: 0.4 }}
+                    className="p-4 bg-[#647FBC]/10 rounded-xl border border-[#647FBC]/20"
                 >
-                  <h3 className="font-bold text-[#647FBC]">
-                    {product.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {product.description}<br />
-                    Category:
-                    {product.category && (<span>  {product.category}</span>)}
-                    {" - $" + product.price}<br />
+                    <h3 className="font-bold text-[#647FBC]">{product.title}</h3>
+                    <p className="text-sm text-gray-600">
+                    {product.description}
+                    <br />
+                    Category:{" "}
+                    {product.category && <span>{product.category}</span>}
+                    {" - $" + product.price}
+                    <br />
                     Rating: {product.rating} ⭐
-                  </p>
+                    </p>
                 </motion.li>
-              ))}
+                ))}
             </motion.ul>
-          )}
+    )}
+
         </div>
       </div>
     </div>
