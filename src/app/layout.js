@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <Navbar />
             <main className="pt-14">{children}</main>
-            <Toaster position="top-right"
+            <Toaster position="bottom-right"
               toastOptions={{
                 style: {  background: "#363636", color: "#fff", marginTop: "60px", height: "48px" },
               }}
