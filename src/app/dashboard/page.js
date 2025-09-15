@@ -9,37 +9,54 @@ import { toast } from "react-hot-toast";
 
 const fetchPosts = async () => {
   const res = await fetch("https://dummyjson.com/products?limit=10");
+  if (!res.ok) throw new Error("Failed to fetch products");
   const json = await res.json();
   return json.products;
 };
 
 export default function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const router = useRouter();
 
-  const { data = [], isLoading } = useQuery({
+  const { data = [], isLoading, error } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
+    enabled: !loading && !!user,
   });
 
   const postCount = useMemo(() => data.length, [data]);
 
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       router.push("/login");
     }
-  }, [user, router]);
+  }, [user, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500">Checking authentication...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500">Redirecting...</p>
+      </div>
+    );
+  }
 
   const handleLogout = () => {
     logout();
     toast.success("Đã đăng xuất!");
   };
 
-  if (!user) return null;
-
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-3xl mx-auto">
+        {/* Header */}
         <motion.div
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -54,67 +71,54 @@ export default function Dashboard() {
           </motion.div>
         </motion.div>
 
-
+        {/* Products */}
         <div className="bg-white rounded-2xl shadow-md p-6">
           <h2 className="text-lg font-semibold text-[#647FBC] mb-4">
             Products (count: {postCount})
           </h2>
 
           {isLoading ? (
+            <p className="text-gray-500">Loading products...</p>
+          ) : error ? (
+            <p className="text-red-500">Failed to load products.</p>
+          ) : data.length > 0 ? (
             <motion.ul
-                className="space-y-3"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-            >
-                {[...Array(5)].map((_, i) => (
-                <div
-                    key={i}
-                    className="p-4 bg-gray-100 rounded-xl border border-gray-200 animate-pulse"
-                >
-                    <div className="h-4 w-1/3 bg-gray-300 rounded mb-2"></div>
-                    <div className="h-3 w-full bg-gray-300 rounded mb-1"></div>
-                    <div className="h-3 w-2/3 bg-gray-300 rounded"></div>
-                </div>
-                ))}
-            </motion.ul>
-            ) : (
-            <motion.ul
-                initial="hidden"
-                animate="show"
-                variants={{
+              initial="hidden"
+              animate="show"
+              variants={{
                 hidden: { opacity: 0 },
                 show: {
-                    opacity: 1,
-                    transition: { staggerChildren: 0.15 },
+                  opacity: 1,
+                  transition: { staggerChildren: 0.15 },
                 },
-                }}
-                className="space-y-3"
+              }}
+              className="space-y-3"
             >
-                {data.map((product) => (
+              {data.map((product) => (
                 <motion.li
-                    key={product.id}
-                    variants={{
+                  key={product.id}
+                  variants={{
                     hidden: { opacity: 0, y: 20 },
                     show: { opacity: 1, y: 0 },
-                    }}
-                    transition={{ duration: 0.4 }}
-                    className="p-4 bg-[#647FBC]/10 rounded-xl border border-[#647FBC]/20"
+                  }}
+                  transition={{ duration: 0.4 }}
+                  className="p-4 bg-[#647FBC]/10 rounded-xl border border-[#647FBC]/20"
                 >
-                    <h3 className="font-bold text-[#647FBC]">{product.title}</h3>
-                    <p className="text-sm text-gray-600">
+                  <h3 className="font-bold text-[#647FBC]">{product.title}</h3>
+                  <p className="text-sm text-gray-600">
                     {product.description}
                     <br />
-                    Category:{" "}
-                    {product.category && <span>{product.category}</span>}
+                    Category: {product.category}
                     {" - $" + product.price}
                     <br />
                     Rating: {product.rating} ⭐
-                    </p>
+                  </p>
                 </motion.li>
-                ))}
+              ))}
             </motion.ul>
-    )}
-
+          ) : (
+            <p className="text-gray-500">No products found.</p>
+          )}
         </div>
       </div>
     </div>
