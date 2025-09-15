@@ -1,17 +1,19 @@
 "use client";
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  const login = (name) => setUser({ name });
+  const login = (userData) => setUser(userData);
   const logout = () => setUser(null);
 
-  const value = useMemo(() => ({ user, login, logout }), [user]);
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
 
 export const useAuth = () => useContext(AuthContext);

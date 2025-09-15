@@ -26,12 +26,19 @@ export default function Navbar() {
     <div className="flex items-center space-x-4 mt-2">
       {user ? (
         <>
-          <Link href="/dashboard" className="hover:text-gray-200 transition">
-            Dashboard
-          </Link>
-          <Link href="/profile" className="hover:text-gray-200 transition">
-            Profile
-          </Link>
+        <Link
+            href="/dashboard"
+            className="px-3 py-1 rounded-md hover:bg-white/20 transition"
+        >
+        Dashboard
+        </Link>
+        <Link
+        href="/profile"
+        className="px-3 py-1 rounded-md hover:bg-white/20 transition"
+        >
+        Profile
+        </Link>
+
         </>
       ) : (
         /*<Link

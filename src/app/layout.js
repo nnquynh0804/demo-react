@@ -5,8 +5,8 @@ import Navbar from "../components/ui/navbar";
 import { Toaster } from "react-hot-toast";
 
 export const metadata = {
-  title: "Next.js Demo",
-  description: "TanStack + Context + Tailwind",
+  title: "Demo",
+  description: "Demo project with Next.js, React Query, Tailwind CSS, Framer Motion, and React Hot Toast",
 };
 
 export default function RootLayout({ children }) {

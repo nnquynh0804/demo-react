@@ -8,16 +8,21 @@ import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 
 const fetchPosts = async () => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
-  return res.json();
+  const res = await fetch("https://dummyjson.com/products?limit=10");
+  const json = await res.json();
+  return json.products; // ✅ lấy mảng products
 };
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const router = useRouter();
-  const { data, isLoading } = useQuery({ queryKey: ["posts"], queryFn: fetchPosts });
 
-  const postCount = useMemo(() => (data ? data.length : 0), [data]);
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchPosts,
+  });
+
+  const postCount = useMemo(() => data.length, [data]);
 
   useEffect(() => {
     if (!user) {
@@ -27,8 +32,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     logout();
-    toast.success("Đã đăng xuất!", {
-    });
+    toast.success("Đã đăng xuất!");
   };
 
   if (!user) return null;
@@ -36,6 +40,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-3xl mx-auto">
+        {/* Header */}
         <motion.div
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -50,10 +55,10 @@ export default function Dashboard() {
           </motion.div>
         </motion.div>
 
-        {/* Posts */}
+        {/* Products */}
         <div className="bg-white rounded-2xl shadow-md p-6">
           <h2 className="text-lg font-semibold text-[#647FBC] mb-4">
-            Posts (count: {postCount})
+            Products (count: {postCount})
           </h2>
 
           {isLoading ? (
@@ -71,9 +76,9 @@ export default function Dashboard() {
               }}
               className="space-y-3"
             >
-              {data.map((post) => (
+              {data.map((product) => (
                 <motion.li
-                  key={post.id}
+                  key={product.id}
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     show: { opacity: 1, y: 0 },
@@ -81,8 +86,15 @@ export default function Dashboard() {
                   transition={{ duration: 0.4 }}
                   className="p-4 bg-[#647FBC]/10 rounded-xl border border-[#647FBC]/20"
                 >
-                  <h3 className="font-bold text-[#647FBC]">{post.title}</h3>
-                  <p className="text-sm text-gray-600">{post.body}</p>
+                  <h3 className="font-bold text-[#647FBC]">
+                    {product.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {product.description}<br />
+                    Category:
+                    {product.category && (<span>  {product.category}</span>)}
+                    {" - $" + product.price}
+                  </p>
                 </motion.li>
               ))}
             </motion.ul>
