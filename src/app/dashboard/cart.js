@@ -1,19 +1,26 @@
 "use client";
+import { useMemo } from "react";
 
 export default function Cart({
   cart,
-  totalPrice,
   removeFromCart,
   increaseQty,
   decreaseQty,
 }) {
+  // totalPrice sẽ được tính lại khi cart thay đổi
+  const totalPrice = useMemo(() => {
+    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }, [cart]);
+
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 h-fit">
       <h2 className="text-lg font-semibold text-[#647FBC] mb-4 flex items-center justify-between">
         <span>🛒 Cart ({cart.length})</span>
         <span className="text-sm text-gray-600">
           Total:{" "}
-          <span className="font-bold text-[#2F4B8F]">${totalPrice.toFixed(2)}</span>
+          <span className="font-bold text-[#2F4B8F]">
+            ${totalPrice.toFixed(2)}
+          </span>
         </span>
       </h2>
 
@@ -24,7 +31,6 @@ export default function Cart({
               key={item.id}
               className="bg-gray-50 p-3 rounded-lg shadow-sm"
             >
-              {/* Top: image + name + remove */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   {item.thumbnail && (
@@ -66,7 +72,7 @@ export default function Cart({
                 </div>
 
                 <span className="text-sm font-bold text-[#2F4B8F]">
-                  ${item.price * item.quantity}
+                  ${(item.price * item.quantity).toFixed(2)}
                 </span>
               </div>
             </li>
