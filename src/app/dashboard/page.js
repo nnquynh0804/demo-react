@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast";
 const fetchPosts = async () => {
   const res = await fetch("https://dummyjson.com/products?limit=10");
   const json = await res.json();
-  return json.products; // ✅ lấy mảng products
+  return json.products;
 };
 
 export default function Dashboard() {
@@ -40,7 +40,6 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-3xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -55,7 +54,6 @@ export default function Dashboard() {
           </motion.div>
         </motion.div>
 
-        {/* Products */}
         <div className="bg-white rounded-2xl shadow-md p-6">
           <h2 className="text-lg font-semibold text-[#647FBC] mb-4">
             Products (count: {postCount})

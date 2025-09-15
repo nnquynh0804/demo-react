@@ -28,7 +28,6 @@ export default function ProfilePage() {
         
         <div className="space-y-3 text-left text-gray-700">
           <p><span className="font-semibold ">Username:</span> {user.name}</p>
-          {/* Anh có thể bổ sung thêm email, role... nếu muốn */}
         </div>
       </motion.div>
     </div>

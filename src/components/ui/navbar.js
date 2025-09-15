@@ -22,7 +22,6 @@ export default function Navbar() {
         Demo App
     </Link>
 
-    {/* Menu */}
     <div className="flex items-center space-x-4 mt-2">
       {user ? (
         <>
