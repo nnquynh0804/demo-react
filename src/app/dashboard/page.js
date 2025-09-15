@@ -93,7 +93,8 @@ export default function Dashboard() {
                     {product.description}<br />
                     Category:
                     {product.category && (<span>  {product.category}</span>)}
-                    {" - $" + product.price}
+                    {" - $" + product.price}<br />
+                    Rating: {product.rating} ⭐
                   </p>
                 </motion.li>
               ))}
